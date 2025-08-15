@@ -31,13 +31,6 @@ func (h *Host) ToString() (host string) {
 	return h.Protocol + net.JoinHostPort(h.Address, h.Port)
 }
 
-type HttpPlacement struct {
-	Header    string `json:"header"`
-	UrlParam  string `json:"urlParam"`
-	PathParam string `json:"pathParam"`
-	Body      bool   `json:"body"`
-}
-
 type Operation struct {
 	Action string   `json:"action"`
 	Value  []string `json:"value"`
