@@ -76,23 +76,20 @@ func (p *Profile) Validate() (err error) {
 
 func (p *Profile) GetHosts() (hosts []Host) {
 	hosts = []Host{}
-	index := 0
 	known := []string{}
 	for _, host := range p.Receive.Hosts {
 		if slices.Contains(known, host.Protocol+host.Address+host.Port) {
 			continue
 		}
 		known = append(known, host.Protocol+host.Address+host.Port)
-		hosts[index] = host
-		index++
+		hosts = append(hosts, host)
 	}
 	for _, host := range p.Respond.Hosts {
 		if slices.Contains(known, host.Protocol+host.Address+host.Port) {
 			continue
 		}
 		known = append(known, host.Protocol+host.Address+host.Port)
-		hosts[index] = host
-		index++
+		hosts = append(hosts, host)
 	}
 	return hosts
 }
