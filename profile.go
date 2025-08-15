@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"net"
 	"net/http"
+	"slices"
 	"strings"
 	"time"
 )
@@ -74,13 +75,22 @@ func (p *Profile) Validate() (err error) {
 }
 
 func (p *Profile) GetHosts() (hosts []Host) {
-	hosts = make([]Host, len(p.Receive.Hosts)+len(p.Respond.Hosts))
+	hosts = []Host{}
 	index := 0
+	known := []string{}
 	for _, host := range p.Receive.Hosts {
+		if slices.Contains(known, host.Protocol+host.Address+host.Port) {
+			continue
+		}
+		known = append(known, host.Protocol+host.Address+host.Port)
 		hosts[index] = host
 		index++
 	}
 	for _, host := range p.Respond.Hosts {
+		if slices.Contains(known, host.Protocol+host.Address+host.Port) {
+			continue
+		}
+		known = append(known, host.Protocol+host.Address+host.Port)
 		hosts[index] = host
 		index++
 	}
