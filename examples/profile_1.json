@@ -1,0 +1,126 @@
+{
+    "publicKey": {
+        "encodings": [
+            "hex",
+            "pem"
+        ],
+        "value": ""
+    },
+
+    "tick": {
+        "sleepMin": 3000,
+        "sleepMax": 3000
+    },
+
+    "respond": {
+        "id": {
+            "operations": [
+                { "action": "hex" },
+                { "action": "prefix", "value": ["cache-sum5="] }
+            ],
+            "placement": {
+                "header": "User-Agent"
+            }
+        },
+        "payload": {
+            "request": {
+                "operations": [
+                    { "action": "hex" },
+                    { "action": "csv" }
+                ],
+                "placement": {
+                    "body": true
+                }
+            },
+            "response": {
+                "operations": [
+                    { "action": "base64" }
+                ],
+                "placement": {
+                    "body": true
+                }
+            }
+        },
+        "timeout": 10000,
+        "hosts": [
+            { "protocol": "http://", "address": "127.0.0.1", "port": "8001" }
+        ],
+        "routes": [
+            "/v1/messages",
+            "sending"
+        ],
+        "headers": {
+            "Host": [
+                "example.com",
+                "something.net"
+            ],
+            "User-Agent": [
+                "totally chrome"
+            ]
+        },
+         "methods": [
+            "POST",
+            "PUT"
+        ]
+    },
+
+    "receive": {
+        "id": {
+            "operations": [
+                { "action": "hex" }
+            ],
+            "placement": {
+                "urlParam": "xyz"
+            }
+        },
+        "payload": {
+            "response": {
+                "operations": [
+                    { "action": "hex" },
+                    { "action": "prefix", "value": ["{\"upload_id\":\""] },
+                    { "action": "suffix", "value": ["\"}"] }
+                ],
+                "placement": {
+                    "body": true
+                }
+            }
+        },
+        "timeout": 10000,
+        "hosts": [
+            { "protocol": "http://", "address": "127.0.0.1", "port": "8001" }
+        ],
+        "routes": [
+            "/v1/messages",
+            "something"
+        ],
+        "headers": {
+            "Host": [
+                "example.com",
+                "something.net"
+            ],
+            "X-custom-Header": [
+                "xyz"
+            ],
+            "X-custom2": [
+                "123",
+                "345",
+                "678"
+            ],
+            "User-Agent": [
+                "totally chrome"
+            ]
+        },
+        "methods": [
+            "GET"
+        ],
+        "urlParams": {
+            "xyz": [
+                "123",
+                "abc"
+            ],
+            "abc": [
+                "xyz"
+            ]
+        }
+    }
+}
