@@ -17,17 +17,17 @@ type HttpPlacement struct {
 	Body      bool   `json:"body"`
 }
 
-func Extract(placement *HttpPlacement, r *http.Request) (data string, err error) {
-	if len(placement.Header) != 0 {
-		return r.Header.Get(placement.Header), nil
+func (p *HttpPlacement) Extract(r *http.Request) (data string, err error) {
+	if len(p.Header) != 0 {
+		return r.Header.Get(p.Header), nil
 	}
-	if len(placement.PathParam) != 0 {
-		return r.PathValue(placement.PathParam), nil
+	if len(p.PathParam) != 0 {
+		return r.PathValue(p.PathParam), nil
 	}
-	if len(placement.UrlParam) != 0 {
-		return r.URL.Query().Get(placement.UrlParam), nil
+	if len(p.UrlParam) != 0 {
+		return r.URL.Query().Get(p.UrlParam), nil
 	}
-	if placement.Body {
+	if p.Body {
 		rawData, err := io.ReadAll(r.Body)
 		defer r.Body.Close()
 		return string(rawData), err
