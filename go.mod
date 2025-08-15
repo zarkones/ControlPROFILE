@@ -1,4 +1,4 @@
-module profiles
+module github.com/zarkones/ControlPROFILE
 
 go 1.24.5
 
