@@ -1,12 +1,4 @@
 {
-    "publicKey": {
-        "encodings": [
-            "hex",
-            "pem"
-        ],
-        "value": ""
-    },
-
     "tick": {
         "sleepMin": 3000,
         "sleepMax": 3000
